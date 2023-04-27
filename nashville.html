@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ==" crossorigin="" />
+    <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js" integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew==" crossorigin=""></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-ajax/2.1.0/leaflet.ajax.min.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro" rel="stylesheet" />
+    <!-- <script src="./bundle.js" type="text/javascript" charset="utf-8"></script> -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC-wPhSditxIw4NCaDAJBmIQyekLLnsJII&libraries=geometry"></script>
+    <script src="lib/Leaflet.Coordinates-0.1.3.min.js"></script>
+    <script src="lib/leaflet.textpath.js"></script>
+    <link rel="stylesheet" href="lib/Leaflet.Coordinates-0.1.3.css">
+    <link rel="stylesheet" href="lib/tab.css">
+    <link rel="stylesheet" href=
+    "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="lib/tab.js"></script>
+    <link rel="stylesheet" href="lib/leaflet-search.src.css">
+    <link rel="stylesheet" type="text/css" href="./map.css" />
+    <link rel="stylesheet" type="text/css" href="./app.css" />
+    <title>Nashville Historical Map</title>   
+    <style>
+        .leaflet-control-search.search-exp{
+            display: inline-grid;
+            width: 100%;
+        }
+        .search-tooltip{
+            overflow-y: scroll;
+            overflow-x: hidden;
+            /* max-height: calc(100vh - 500px); */
+            padding: 5px;
+        }
+        .slide{
+            text-align: center;
+        }
+		.slide img {
+			max-width: 280px;
+            max-height: 280px;
+		}
+		.height {
+			height: 10px;
+		}
+		
+		/* Image-container design */
+		.image-container {
+			max-width: 400px;
+			position: relative;
+			margin: auto;
+		}
+		
+		.next {
+			right: 0;
+		}
+		
+		/* Next and previous icon design */
+		.previous,
+		.next {
+			cursor: pointer;
+			position: absolute;
+			top: 20px;
+			padding: 10px 5px;
+			margin-top: -25px;
+            color: #000000;
+		}
+		
+		/* caption decorate */
+		.captionText {
+			color: #f2c885;
+			font-size: 14px;
+			position: absolute;
+			padding: 12px 12px;
+			bottom: -30px;
+			width: 100%;
+			text-align: center;
+		}
+		
+		/* Slider image number */
+		.slideNumber {
+			/* background-color: #5574C5; */
+			color: black;
+			border-radius: 25px;
+			bottom: -40px;
+			opacity: .5;
+			margin: 5px;
+			/* width: 30px;
+			height: 30px; */
+			text-align: center;
+			font-weight: bold;
+			font-size: 24px;
+			position: absolute;
+		}
+		.fa {
+			font-size: 32px;
+		}
+
+        
+		
+		/* .fa:hover {
+			transform: rotate(360deg);
+			transition: 1s;
+			color: white;
+		} */
+		
+		/* .footerdot {
+			cursor: pointer;
+			height: 15px;
+			width: 15px;
+			margin: 0 2px;
+			background-color: #bbbbbb;
+			border-radius: 50%;
+			display: inline-block;
+			transition: background-color 0.5s ease;
+		} */
+		
+		/* .active,
+		.footerdot:hover {
+			background-color: black;
+		} */
+	</style>
+</head>
+
+<body>
+    <div id="route">
+        <!-- <h1 class="title">Traveling Salesman</h1> -->
+        <div class="instructions">
+            <div id="control-head">
+            <div>
+                <img src="images/leftPanalImages/ul-corner.png" id="ul-corner">
+                <img src="images/leftPanalImages/ur-corner.png" id="ur-corner"alt="">
+            </div>
+
+            <div id="interact" class="grid-container">
+                <div class="grid-item logo">
+                    <img src="images/leftPanalImages/han-logo-2jan2023.png" id='logo'>
+                </div>
+                <div class="grid-item labeltxt">
+                    <span >Mode</span>
+                </div>
+                <div class="grid-item">
+                    <div id='modeDiv' class="custom-select" onclick='selectMode(this)'>
+                        <select name="mode" id="mode"></select>
+                    </div>
+                </div>
+                <div class="grid-item labeltxt">
+                    <span>Year</span>
+                </div>
+                <div class="grid-item">
+                    <div id='yearDiv' class="custom-select" onclick='selectYear(this)'>
+                        <select name='year' id='year'></select>
+                    </div>
+                    <span class="hidden"></span>
+                </div>
+
+                <div class="grid-item labeltxt" id="">
+                    <span>2016 Overlay</span>
+                </div> 
+                <div id='overlayRadio' >
+                    <label class="onofflayer">
+                        <input id="onRedioOverlay" type="radio" name="2016Overlay" value='on' onclick='select2016Overlay(this)'>On</input>
+                        <span class="checkmark"></span>
+                      </label>
+                      <label class="onofflayer">
+                        <input id="offRedioOverlay" type="radio" name="2016Overlay" value='off' onclick='select2016Overlay(this)' checked>Off</input>
+                        <span class="checkmark"></span>
+                      </label>
+                    <!-- <input type="radio" name="2016Overlay" value='on' onclick='select2016Overlay(this)'>On</input>
+                    <input type="radio" name="2016Overlay" value='off' onclick='select2016Overlay(this)' checked>Off</input> -->
+                    
+                </div>
+                <div class="grid-item">
+                    <span class="hidden"></span>
+                </div>
+                             
+            </div>
+            <div>
+                <img src="images/leftPanalImages/ll-corner.png" id="ll-corner">
+                <img src="images/leftPanalImages/lr-corner.png" id="lr-corner" alt="">
+            </div>
+        </div>
+            <div id="informationPanal" class="informationPanal">
+                <!-- Tab links -->
+                <div class="tab">
+                    <button id="selection_btn" class="tablinks" onclick="openCity(event, 'Selection')">Selection</button>
+                    <button id="legend_btn" class="tablinks" onclick="openCity(event, 'Legend')">Legend</button>
+                    <button id="search_btn" class="tablinks" onclick="openCity(event, 'Search')">Search</button>
+                    <button id="support_btn" class="tablinks" onclick="openCity(event, 'Support')">Support</button>
+                </div>
+                <!-- Tab content -->
+                <div id="Selection" class="tabcontent">
+                    <div id="select_div">
+                        <!-- <h4 id="SelectionName"></h4>
+                        <p id="selectionAltName"></p>
+                        <p id="selection_subtitle"></p>
+                        <div class="image-container">
+                            <div class="slide">                                
+                                <img id="selection_img" hidden>
+                                <div id="img_attribution" class="captionText"></div>
+                            </div> -->
+                            <!-- <div class="slide">                                
+                                <img src="images/testimages/testimage2.png">
+                                <div class="captionText">asdfate aetaedfd</div>
+                            </div>
+                            <div class="slide">                                
+                                <img src="images/testimages/testimage3.png">
+                                <div class="captionText">tesadf asdfaadfadsf asdf</div>
+                            </div> -->
+                    
+                            <!-- Next and Previous icon to change images -->
+                            <!-- <a class="previous" onclick="moveSlides(-1)"> -->
+                                <!-- <i class="fa fa-chevron-left" aria-hidden="true"></i> -->
+                                <!-- <img src="images/leftPanalImages/previous-enabled.png" /> -->
+                            <!-- </a> -->
+                            <!-- <a class="next" onclick="moveSlides(1)"> -->
+                                <!-- <i class="fa fa-chevron-right"></i> -->
+                                <!-- <img src="images/leftPanalImages/next-enabled.png" /> -->
+                            <!-- </a> -->
+                        <!-- </div> -->
+                        <!-- <p id="selection_description"></p> -->
+                    </div>
+                </div>
+                
+                <div id="Legend" class="legend tabcontent">
+                    
+                    <div id="legend_img">
+                        <img id="legend_content" src="images/legend/legendcontent_2jan2023.png" />
+                    </div>
+                    <!-- <div id="uparrow"><img src="images/legend/expandedlegendbar.png"></div>
+                    <div id="downarrow" style="display: none;"><img src="images/legend/collapsedlegendbar.png"></div> -->
+                </div>
+                <div id="Search" class="tabcontent">
+                    <div id="search_div">
+                    <p>Enter a search term.</p>
+                    <!-- <input type="radio" name="landmark" />
+                    <label for="landmark">A landmark</label>
+                    <input type="radio" name="street" />
+                    <label for="street">A Street</label> -->
+                    </div>
+                </div>
+            </div>            
+        </div>
+        <div id="gridCollapse" class="collapsible hidden">
+            <img src="images/leftPanalImages/collapsebutton.png">
+        </div>
+        <div id="map"></div>
+    </div>
+</body>
+<script src="lib/leaflet.active-layers.min.js" type="text/javascript" charset="utf-8"></script>
+<script src='https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-omnivore/v0.3.1/leaflet-omnivore.min.js'></script>
+<script src="data/vector/Landmarks 4 (for dev).js"></script>
+<script src="data/vector/Streets 3 (for dev) geojson.js"></script>
+<script src="lib/leaflet-search.src.js"></script>
+<script src="lib/leaflet-clonelayer.js"></script>
+
+<script src='nashville.js'></script>
+<script src="lib/custom-select.js"></script>
+<link rel="stylesheet" href="lib/custom-select.css">
+
+<script>
+    // collapsible left sidebar
+    var coll = document.getElementsByClassName("collapsible");
+    var i;
+    $( document ).ready(function(){
+        $('#Selection').show();
+        // $('#selection_btn').css('border-bottom','none');
+    });
+
+    for (i = 0; i < coll.length; i++) {
+        coll[i].addEventListener("click", function() {
+            this.classList.toggle("active");
+            // debugger;
+            var content = this.previousElementSibling;
+            var mapDiv = this.nextElementSibling;
+            // debugger;
+            if(this.classList[1] == 'active'){
+                content.style.display = "none";
+                mapDiv.style.width = "calc(100% - 5px)";
+                mapDiv.style.borderLeft = "5px solid black";
+                map.invalidateSize();
+                this.style.left = "0px";
+                this.style.marginLeft = '-15px';
+                this.firstElementChild.src = 'images/leftPanalImages/expandbutton.png';                
+            }else{
+                content.style.display = "inline-flex";
+                content.style.width = "calc(var(--CPwidth))";
+                mapDiv.style.width = "calc(100% - var(--CPwidth) - 30px)";
+                this.style.left = "calc(330px)";
+                this.firstElementChild.src = 'images/leftPanalImages/collapsebutton.png';
+            }
+        });
+    }
+        // $( document ).ready(function(){
+        //     $('#legend_content').hide();
+        //     $('#legend_img').hide();
+        //     $('#uparrow').hide();
+        //     $('#downarrow').show();
+
+        //     $('#uparrow').click(function(){
+        //         $('#legend_content').hide();
+        //         $('#legend_img').hide();
+        //         $(this).hide();
+        //         $('#downarrow').show();
+        //     });
+        //     $('#downarrow').click(function(){
+        //         $('#legend_content').show();
+        //         $('#legend_img').show();
+        //         $(this).hide();
+        //         $('#uparrow').show();
+        //     });
+                        
+        //     // Get the element with id="defaultOpen" and click on it
+        //     document.getElementById("Legend").click();
+        // });
+</script>
+<script>
+    // $('.instructions')[0].style.height = 'auto'
+</script>
+<script>
+    var slideIndex = 1;
+    displaySlide(slideIndex);
+
+    function moveSlides(n) {
+        displaySlide(slideIndex += n);
+    }
+
+    function activeSlide(n) {
+        displaySlide(slideIndex = n);
+    }
+
+    /* Main function */
+    function displaySlide(n) {
+        var i;
+        var totalslides =
+            document.getElementsByClassName("slide");
+        
+        // var totaldots =
+            // document.getElementsByClassName("footerdot");
+        
+        if (n > totalslides.length || n==1) {
+            // last slide khe next yasa first slide khe waniu
+            slideIndex = 1;
+        }
+        if (n < 1) {
+            slideIndex = totalslides.length;
+        }
+        for (i = 0; i < totalslides.length; i++) {
+            totalslides[i].style.display = "none";
+        }
+        // for (i = 0; i < totaldots.length; i++) {
+        //     totaldots[i].className =
+        //     totaldots[i].className.replace(" active", "");
+        // }
+        
+        if(totalslides.length > 0)
+        totalslides[slideIndex - 1].style.display = "block";
+        // totaldots[slideIndex - 1].className += " active";
+        // $(".slide img").on('load', function(){ 
+        //     // alert('image loaded!');        
+        //     for (i = 0; i < totalslides.length; i++) {
+        //         if(totalslides[i].style.display == "block" && totalslides[i].children.length>0)
+        //         {
+        //             let imagChildr = totalslides[i].children;
+        //             for(j = 0; j < imagChildr.length; j++){
+        //                 $('.captionText').width(imagChildr[j].clientWidth)
+        //                 .css('left', (370-imagChildr[j].clientWidth)/2)
+        //                 .css('text-align','left');
+        //             }
+
+        //         }
+                
+        //     }
+        // });
+        
+        
+    }
+</script>
+</html>
