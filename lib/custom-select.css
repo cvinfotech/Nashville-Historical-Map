@@ -49,12 +49,13 @@
 }
 
 .select-items div{
+  color:#f2c885;
   border-top: 0px !important;
     border-bottom: 0px !important;
 }
 
 .select-items div:last-child{
-    border-bottom: 1px solid !important;
+    border-bottom: 1px solid #666056 !important;
 }
 
 
