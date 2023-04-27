@@ -30,7 +30,7 @@
   
 /* Point the arrow upwards when the select box is open (active): */
 .select-selected, .select-arrow-active:after {
-    border-color: transparent transparent #f2c885 transparent;
+/*    border-color: transparent transparent #f2c885 transparent;*/
     top: 10px;
   }
   
