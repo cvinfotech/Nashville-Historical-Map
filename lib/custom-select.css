@@ -56,7 +56,15 @@
 }
 
 .select-items div:last-child{
+      border-bottom-left-radius: 6px;
+  border-bottom-right-radius: 6px;
     border-bottom: 1px solid #666056 !important;
+}
+
+.select-items div:first-child{
+      border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
+    border-top: 1px solid #666056 !important;
 }
 
 
