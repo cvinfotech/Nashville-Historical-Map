@@ -299,8 +299,9 @@ body {
 /* The container */
 .onofflayer {
   position: relative;
-  padding-left: 35px;
-  margin-bottom: 12px;
+  padding-left: 30px;
+  padding-top: 4px;
+/*  margin-bottom: 12px;*/
   cursor: pointer;
   /* font-size: 22px; */
   -webkit-user-select: none;
