@@ -12,6 +12,7 @@
   }
 
 .select-selected {
+  border-radius: 6px;
 /* background-color: #f2c885; */
 }
 
@@ -45,7 +46,7 @@
     border-color: #666056;
     cursor: pointer;
     background-color: #221d1f;
-    border-radius: 6px;
+/*    border-radius: 6px;*/
 }
 
 .select-items div{
