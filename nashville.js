@@ -1100,10 +1100,14 @@ function updateZoomText() {
 }
 updateZoomText();
 
+window.onload = function() {
+
 if (!debugMode) {
   selectMode({ innerText: "Just Maps" });
   $("#mode.select-selected")[0].innerText = "Just Maps";
 } else {
   selectMode({ innerText: "Landmarks" });
   $("#mode.select-selected")[0].innerText = "Landmarks";
+}
+
 }
