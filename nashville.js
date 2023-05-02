@@ -767,7 +767,15 @@ function selectMode(elem) {
   console.log(overlays);
   console.log('cdc');
   console.log(mode);
-  mode = 'Streets';
+  if (mode = 'Streets') {
+    mode = 'Streets';
+  }else if (mode = 'Battle of Nashville') {
+    mode = 'Battle of Nashville';
+  }else if (mode = 'Landmarks') {
+    mode = 'Landmarks';
+  }else{
+    mode = 'Just Maps';
+  }  
   console.log(overlays[mode]);
   map.addLayer(overlays[mode]);
   switch (mode) {
