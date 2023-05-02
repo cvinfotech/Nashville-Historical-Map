@@ -766,7 +766,7 @@ function selectMode(elem) {
   $("#offRedioOverlay").prop("checked", true).trigger("click");
   console.log(overlays);
   console.log('cdc');
-  console.log(overlays[mode]);
+  console.log(mode);
   map.addLayer(overlays[mode]);
   switch (mode) {
     case "Just Maps":
