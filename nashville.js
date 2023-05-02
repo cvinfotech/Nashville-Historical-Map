@@ -759,7 +759,7 @@ $(document).ready(function () {
   });
 });
 function selectMode(elem) {
-  const mode = elem.innerText;
+  let mode = elem.innerText;
   for (let i in overlays) {
     map.removeLayer(overlays[i]);
   }
@@ -768,7 +768,7 @@ function selectMode(elem) {
   console.log('cdc');
   console.log(mode);
   console.log(overlays[mode]);
-  map.addLayer(overlays['Landmarks']);
+  map.addLayer(overlays[mode]);
   switch (mode) {
     case "Just Maps":
       // find previous map
