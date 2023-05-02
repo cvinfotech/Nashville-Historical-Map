@@ -760,11 +760,11 @@ $(document).ready(function () {
 });
 function selectMode(elem) {
   const mode = elem.innerText;
-  console.log(mode);
   for (let i in overlays) {
     map.removeLayer(overlays[i]);
   }
   $("#offRedioOverlay").prop("checked", true).trigger("click");
+  console.log(overlays);
   map.addLayer(overlays[mode]);
   switch (mode) {
     case "Just Maps":
