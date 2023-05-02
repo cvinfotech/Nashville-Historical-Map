@@ -768,7 +768,7 @@ function selectMode(elem) {
   console.log('cdc');
   console.log(mode);
   console.log(overlays['Streets']);
-  map.addLayer(overlays[mode]);
+  map.addLayer(overlays['Streets']);
   switch (mode) {
     case "Just Maps":
       // find previous map
