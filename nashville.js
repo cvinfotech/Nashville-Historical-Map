@@ -767,11 +767,11 @@ function selectMode(elem) {
   console.log(overlays);
   console.log('cdc');
   console.log(mode);
-  if (mode = 'Streets') {
+  if (mode == 'Streets') {
     nmmode = 'Streets';
-  }else if (mode = 'Battle of Nashville') {
+  }else if (mode == 'Battle of Nashville') {
     nmmode = 'Battle of Nashville';
-  }else if (mode = 'Landmarks') {
+  }else if (mode == 'Landmarks') {
     nmmode = 'Landmarks';
   }else{
     nmmode = 'Just Maps';
