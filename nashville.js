@@ -765,25 +765,24 @@ function selectMode(elem) {
   }
   $("#offRedioOverlay").prop("checked", true).trigger("click");
   console.log(overlays);
-  console.log('cdc123');
+  console.log('cdc1231');
   console.log(mode);
-  var nmode;
 
   if (mode == 'Streets') {
-    nmode = 'Streets';
+    map.addLayer(overlays['Streets']);
   }
   if (mode == 'Battle of Nashville') {
-    nmode = 'Battle of Nashville';
+    map.addLayer(overlays['Battle of Nashville']);
   } 
 
   if(mode == 'Landmarks') {
-    nmode = 'Landmarks';
+    map.addLayer(overlays['Landmarks']);
   }
   if(mode == 'Just Maps') {
-    nmode = 'Just Maps';
+    map.addLayer(overlays['Just Maps']);
   }  
-  console.log(overlays[nmode]);
-  map.addLayer(overlays[nmode]);
+  
+  
   switch (mode) {
     case "Just Maps":
       // find previous map
