@@ -765,15 +765,21 @@ function selectMode(elem) {
   }
   $("#offRedioOverlay").prop("checked", true).trigger("click");
   console.log(overlays);
-  console.log('cdc');
+  console.log('cdc123');
   console.log(mode);
+  var nmode;
+
   if (mode == 'Streets') {
     nmode = 'Streets';
-  }else if (mode == 'Battle of Nashville') {
+  }
+  if (mode == 'Battle of Nashville') {
     nmode = 'Battle of Nashville';
-  }else if (mode == 'Landmarks') {
+  } 
+
+  if(mode == 'Landmarks') {
     nmode = 'Landmarks';
-  }else{
+  }
+  if(mode == 'Just Maps') {
     nmode = 'Just Maps';
   }  
   console.log(overlays[nmode]);
