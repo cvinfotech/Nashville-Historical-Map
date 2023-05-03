@@ -768,16 +768,16 @@ function selectMode(elem) {
   console.log('cdc');
   console.log(mode);
   if (mode == 'Streets') {
-    mode = 'Streets';
+    nmode = 'Streets';
   }else if (mode == 'Battle of Nashville') {
-    mode = 'Battle of Nashville';
+    nmode = 'Battle of Nashville';
   }else if (mode == 'Landmarks') {
-    mode = 'Landmarks';
+    nmode = 'Landmarks';
   }else{
-    mode = 'Just Maps';
+    nmode = 'Just Maps';
   }  
-  console.log(overlays[mode]);
-  map.addLayer(overlays[mode]);
+  console.log(overlays[nmode]);
+  map.addLayer(overlays[nmode]);
   switch (mode) {
     case "Just Maps":
       // find previous map
