@@ -769,16 +769,20 @@ function selectMode(elem) {
   console.log(mode);
 
   if (mode == 'Streets') {
+    console.log(overlays['Streets']);
     map.addLayer(overlays['Streets']);
   }
   if (mode == 'Battle of Nashville') {
+    console.log(overlays['Battle of Nashville']);
     map.addLayer(overlays['Battle of Nashville']);
   } 
 
   if(mode == 'Landmarks') {
+    console.log(overlays['Landmarks']);
     map.addLayer(overlays['Landmarks']);
   }
   if(mode == 'Just Maps') {
+    console.log(overlays['Just Maps']);
     map.addLayer(overlays['Just Maps']);
   }  
   
