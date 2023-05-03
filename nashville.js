@@ -760,33 +760,29 @@ $(document).ready(function () {
 });
 function selectMode(elem) {
   let mode = elem.innerText;
+  let nmode = '';
   for (let i in overlays) {
     map.removeLayer(overlays[i]);
   }
   $("#offRedioOverlay").prop("checked", true).trigger("click");
-  console.log(overlays);
-  console.log('cdc1231');
-  console.log(mode);
-
   if (mode == 'Streets') {
-    console.log(overlays['Streets']);
-    map.addLayer(overlays['Streets']);
+    nmode = 'Streets';
   }
   if (mode == 'Battle of Nashville') {
-    console.log(overlays['Battle of Nashville']);
-    map.addLayer(overlays['Battle of Nashville']);
+    nmode = 'Battle of Nashville';
   } 
 
   if(mode == 'Landmarks') {
-    console.log(overlays['Landmarks']);
-    map.addLayer(overlays['Landmarks']);
+    nmode = 'Landmarks';
   }
   if(mode == 'Just Maps') {
-    console.log(overlays['Just Maps']);
-    map.addLayer(overlays['Just Maps']);
+    nmode = 'Just Maps';
   }  
-  
-  
+  console.log(overlays);
+  console.log('testing mode');
+  console.log(nmode);
+  console.log(overlays[nmode]);
+  map.addLayer(overlays[nmode]);
   switch (mode) {
     case "Just Maps":
       // find previous map
